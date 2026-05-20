@@ -1,0 +1,193 @@
+{
+  "_comentario": "Templates de JSON-LD para GEO. Copie o bloco necessario, preencha com dados reais e insira no HTML servido pelo servidor. Valide em validator.schema.org. Remova os campos _comentario. Idealmente una as entidades da pagina via @graph (ver exemplo no fim).",
+
+  "FAQPage": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Primeira pergunta frequente, em linguagem natural?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Resposta direta em texto puro, idem ao conteudo visivel da pagina."
+        }
+      }
+    ]
+  },
+
+  "QAPage": {
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    "mainEntity": {
+      "@type": "Question",
+      "name": "A pergunta central desta pagina?",
+      "answerCount": 1,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A melhor resposta para a pergunta, em texto puro."
+      }
+    }
+  },
+
+  "Organization": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Nome da Empresa",
+    "url": "https://site.com",
+    "logo": "https://site.com/logo.png",
+    "description": "O que a empresa faz, em uma frase factual.",
+    "sameAs": [
+      "https://www.wikidata.org/wiki/Q00000000",
+      "https://pt.wikipedia.org/wiki/Nome_da_Empresa",
+      "https://www.linkedin.com/company/empresa",
+      "https://www.crunchbase.com/organization/empresa"
+    ]
+  },
+
+  "Person_autor": {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nome Completo do Autor",
+    "jobTitle": "Cargo ou especialidade",
+    "description": "Resumo da expertise e da experiencia relevante do autor.",
+    "worksFor": { "@type": "Organization", "name": "Nome da Empresa" },
+    "knowsAbout": ["Topico 1", "Topico 2", "Topico 3"],
+    "alumniOf": "Instituicao de formacao",
+    "url": "https://site.com/autor/nome",
+    "sameAs": [
+      "https://www.linkedin.com/in/perfil",
+      "https://orcid.org/0000-0000-0000-0000"
+    ]
+  },
+
+  "Article": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Titulo do artigo, idealmente em forma de pergunta",
+    "description": "Resumo do artigo.",
+    "datePublished": "2026-01-01",
+    "dateModified": "2026-05-20",
+    "author": { "@type": "Person", "name": "Nome do Autor", "url": "https://site.com/autor/nome" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nome da Empresa",
+      "logo": { "@type": "ImageObject", "url": "https://site.com/logo.png" }
+    }
+  },
+
+  "Product": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Nome do Produto",
+    "sku": "SKU-123",
+    "description": "Descricao do produto.",
+    "image": "https://site.com/produto.jpg",
+    "offers": {
+      "@type": "Offer",
+      "price": "189.00",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/InStock",
+      "url": "https://site.com/produto"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "127"
+    }
+  },
+
+  "HowTo": {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Como fazer X",
+    "step": [
+      { "@type": "HowToStep", "name": "Passo 1", "text": "Instrucao do passo 1." },
+      { "@type": "HowToStep", "name": "Passo 2", "text": "Instrucao do passo 2." }
+    ]
+  },
+
+  "LocalBusiness": {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Nome do Negocio",
+    "image": "https://site.com/fachada.jpg",
+    "telephone": "+55-00-0000-0000",
+    "url": "https://site.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rua Exemplo, 100",
+      "addressLocality": "Cidade",
+      "addressRegion": "UF",
+      "postalCode": "00000-000",
+      "addressCountry": "BR"
+    },
+    "openingHours": "Mo-Fr 09:00-18:00"
+  },
+
+  "Review": {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": { "@type": "Organization", "name": "Nome da Empresa" },
+    "author": { "@type": "Person", "name": "Nome do Cliente" },
+    "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+    "reviewBody": "Depoimento real do cliente."
+  },
+
+  "BreadcrumbList": {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://site.com" },
+      { "@type": "ListItem", "position": 2, "name": "Servicos", "item": "https://site.com/servicos" },
+      { "@type": "ListItem", "position": 3, "name": "Pagina atual", "item": "https://site.com/servicos/pagina" }
+    ]
+  },
+
+  "VideoObject": {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Titulo do video, em forma de pergunta",
+    "description": "Resumo do conteudo do video em texto.",
+    "thumbnailUrl": "https://site.com/thumb.jpg",
+    "uploadDate": "2026-01-01",
+    "duration": "PT5M30S",
+    "embedUrl": "https://www.youtube.com/embed/ID",
+    "transcript": "Transcricao completa do video em texto puro."
+  },
+
+  "_exemplo_graph": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://site.com/#org",
+        "name": "Nome da Empresa",
+        "url": "https://site.com",
+        "sameAs": ["https://www.wikidata.org/wiki/Q00000000"]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://site.com/#autor-nome",
+        "name": "Nome do Autor",
+        "knowsAbout": ["Topico 1"]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://site.com/pagina/#article",
+        "headline": "Titulo do artigo",
+        "datePublished": "2026-01-01",
+        "dateModified": "2026-05-20",
+        "author": { "@id": "https://site.com/#autor-nome" },
+        "publisher": { "@id": "https://site.com/#org" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://site.com" },
+          { "@type": "ListItem", "position": 2, "name": "Pagina", "item": "https://site.com/pagina" }
+        ]
+      }
+    ]
+  }
+}
