@@ -1,5 +1,5 @@
 {
-  "_comentario": "Templates de JSON-LD para GEO. Copie o bloco necessario, preencha com dados reais e insira no HTML servido pelo servidor. Valide em validator.schema.org. Remova os campos _comentario. Idealmente una as entidades da pagina via @graph (ver exemplo no fim).",
+  "_comment": "JSON-LD templates for GEO/AEO. Copy the needed block, fill it with real data, and insert it into server-rendered HTML. Validate at validator.schema.org. Remove any _comment fields. Ideally connect page entities via @graph (see example at the end).",
 
   "FAQPage": {
     "@context": "https://schema.org",
@@ -7,10 +7,10 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Primeira pergunta frequente, em linguagem natural?",
+        "name": "First frequently asked question, in natural language?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Resposta direta em texto puro, idem ao conteudo visivel da pagina."
+          "text": "Direct answer in plain text, matching the visible page content."
         }
       }
     ]
@@ -21,11 +21,11 @@
     "@type": "QAPage",
     "mainEntity": {
       "@type": "Question",
-      "name": "A pergunta central desta pagina?",
+      "name": "The central question for this page?",
       "answerCount": 1,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A melhor resposta para a pergunta, em texto puro."
+        "text": "The best answer to the question, in plain text."
       }
     }
   },
@@ -33,28 +33,28 @@
   "Organization": {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Nome da Empresa",
+    "name": "Company Name",
     "url": "https://site.com",
     "logo": "https://site.com/logo.png",
-    "description": "O que a empresa faz, em uma frase factual.",
+    "description": "What the company does, in one factual sentence.",
     "sameAs": [
       "https://www.wikidata.org/wiki/Q00000000",
-      "https://pt.wikipedia.org/wiki/Nome_da_Empresa",
-      "https://www.linkedin.com/company/empresa",
-      "https://www.crunchbase.com/organization/empresa"
+      "https://en.wikipedia.org/wiki/Company_Name",
+      "https://www.linkedin.com/company/company",
+      "https://www.crunchbase.com/organization/company"
     ]
   },
 
-  "Person_autor": {
+  "Person_author": {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Nome Completo do Autor",
-    "jobTitle": "Cargo ou especialidade",
-    "description": "Resumo da expertise e da experiencia relevante do autor.",
-    "worksFor": { "@type": "Organization", "name": "Nome da Empresa" },
-    "knowsAbout": ["Topico 1", "Topico 2", "Topico 3"],
-    "alumniOf": "Instituicao de formacao",
-    "url": "https://site.com/autor/nome",
+    "name": "Author Full Name",
+    "jobTitle": "Role or specialty",
+    "description": "Summary of the author's expertise and relevant experience.",
+    "worksFor": { "@type": "Organization", "name": "Company Name" },
+    "knowsAbout": ["Topic 1", "Topic 2", "Topic 3"],
+    "alumniOf": "Education institution",
+    "url": "https://site.com/author/name",
     "sameAs": [
       "https://www.linkedin.com/in/perfil",
       "https://orcid.org/0000-0000-0000-0000"
@@ -64,14 +64,14 @@
   "Article": {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Titulo do artigo, idealmente em forma de pergunta",
-    "description": "Resumo do artigo.",
+    "headline": "Article title, ideally phrased as a question",
+    "description": "Short article summary.",
     "datePublished": "2026-01-01",
     "dateModified": "2026-05-20",
-    "author": { "@type": "Person", "name": "Nome do Autor", "url": "https://site.com/autor/nome" },
+    "author": { "@type": "Person", "name": "Author Name", "url": "https://site.com/author/name" },
     "publisher": {
       "@type": "Organization",
-      "name": "Nome da Empresa",
+      "name": "Company Name",
       "logo": { "@type": "ImageObject", "url": "https://site.com/logo.png" }
     }
   },
@@ -79,14 +79,14 @@
   "Product": {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Nome do Produto",
+    "name": "Product Name",
     "sku": "SKU-123",
-    "description": "Descricao do produto.",
+    "description": "Product description.",
     "image": "https://site.com/produto.jpg",
     "offers": {
       "@type": "Offer",
       "price": "189.00",
-      "priceCurrency": "BRL",
+      "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
       "url": "https://site.com/produto"
     },
@@ -100,27 +100,27 @@
   "HowTo": {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    "name": "Como fazer X",
+    "name": "How to do X",
     "step": [
-      { "@type": "HowToStep", "name": "Passo 1", "text": "Instrucao do passo 1." },
-      { "@type": "HowToStep", "name": "Passo 2", "text": "Instrucao do passo 2." }
+      { "@type": "HowToStep", "name": "Step 1", "text": "Step 1 instruction." },
+      { "@type": "HowToStep", "name": "Step 2", "text": "Step 2 instruction." }
     ]
   },
 
   "LocalBusiness": {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Nome do Negocio",
+    "name": "Business Name",
     "image": "https://site.com/fachada.jpg",
-    "telephone": "+55-00-0000-0000",
+    "telephone": "+1-000-000-0000",
     "url": "https://site.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Rua Exemplo, 100",
-      "addressLocality": "Cidade",
-      "addressRegion": "UF",
+      "streetAddress": "Example Street, 100",
+      "addressLocality": "City",
+      "addressRegion": "State",
       "postalCode": "00000-000",
-      "addressCountry": "BR"
+      "addressCountry": "US"
     },
     "openingHours": "Mo-Fr 09:00-18:00"
   },
@@ -128,64 +128,64 @@
   "Review": {
     "@context": "https://schema.org",
     "@type": "Review",
-    "itemReviewed": { "@type": "Organization", "name": "Nome da Empresa" },
-    "author": { "@type": "Person", "name": "Nome do Cliente" },
+    "itemReviewed": { "@type": "Organization", "name": "Company Name" },
+    "author": { "@type": "Person", "name": "Customer Name" },
     "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-    "reviewBody": "Depoimento real do cliente."
+    "reviewBody": "A real customer testimonial."
   },
 
   "BreadcrumbList": {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://site.com" },
-      { "@type": "ListItem", "position": 2, "name": "Servicos", "item": "https://site.com/servicos" },
-      { "@type": "ListItem", "position": 3, "name": "Pagina atual", "item": "https://site.com/servicos/pagina" }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://site.com" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://site.com/services" },
+      { "@type": "ListItem", "position": 3, "name": "Current page", "item": "https://site.com/services/page" }
     ]
   },
 
   "VideoObject": {
     "@context": "https://schema.org",
     "@type": "VideoObject",
-    "name": "Titulo do video, em forma de pergunta",
-    "description": "Resumo do conteudo do video em texto.",
+    "name": "Video title, phrased as a question",
+    "description": "Summary of the video content in text.",
     "thumbnailUrl": "https://site.com/thumb.jpg",
     "uploadDate": "2026-01-01",
     "duration": "PT5M30S",
     "embedUrl": "https://www.youtube.com/embed/ID",
-    "transcript": "Transcricao completa do video em texto puro."
+    "transcript": "Full video transcript in plain text."
   },
 
-  "_exemplo_graph": {
+  "_graph_example": {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": "https://site.com/#org",
-        "name": "Nome da Empresa",
+        "name": "Company Name",
         "url": "https://site.com",
         "sameAs": ["https://www.wikidata.org/wiki/Q00000000"]
       },
       {
         "@type": "Person",
-        "@id": "https://site.com/#autor-nome",
-        "name": "Nome do Autor",
-        "knowsAbout": ["Topico 1"]
+        "@id": "https://site.com/#author-name",
+        "name": "Author Name",
+        "knowsAbout": ["Topic 1"]
       },
       {
         "@type": "Article",
         "@id": "https://site.com/pagina/#article",
-        "headline": "Titulo do artigo",
+        "headline": "Article title",
         "datePublished": "2026-01-01",
         "dateModified": "2026-05-20",
-        "author": { "@id": "https://site.com/#autor-nome" },
+        "author": { "@id": "https://site.com/#author-name" },
         "publisher": { "@id": "https://site.com/#org" }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://site.com" },
-          { "@type": "ListItem", "position": 2, "name": "Pagina", "item": "https://site.com/pagina" }
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://site.com" },
+          { "@type": "ListItem", "position": 2, "name": "Page", "item": "https://site.com/page" }
         ]
       }
     ]

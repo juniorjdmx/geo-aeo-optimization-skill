@@ -1,73 +1,73 @@
 ---
 name: geo-llm-optimization
-description: Otimiza sites e conteúdo para o melhor posicionamento orgânico possível dentro de LLMs e motores de busca generativos (ChatGPT, Perplexity, Google AI Overviews, Gemini, Claude). Cobre GEO (Generative Engine Optimization) e AEO (Answer Engine Optimization) com um checklist de 58 pontos. Use SEMPRE que o usuário pedir para melhorar visibilidade em IA, ranquear em ChatGPT/Perplexity, aparecer em AI Overviews, criar arquivos llms.txt, otimizar conteúdo para ser citado por modelos, fazer auditoria GEO/AEO, escrever artigos "answer-first", aplicar schema markup para IA, montar topic clusters, ou qualquer variação de "como aparecer nas respostas de IA". Também ative quando o usuário falar de Share of Model, Golden Prompts, dark queries, chunking semântico, citation rate, tráfego de referência de IA, ou monitoramento de menções de marca em LLMs, mesmo sem citar "GEO" explicitamente.
+description: Optimizes websites and content for the best possible organic positioning inside LLMs and generative search engines (ChatGPT, Perplexity, Google AI Overviews, Gemini, Claude). Covers GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization) with a 58-point checklist. Use ALWAYS when the user asks to improve AI visibility, rank in ChatGPT/Perplexity, appear in AI Overviews, create llms.txt files, optimize content to be cited by models, run a GEO/AEO audit, write "answer-first" articles, apply AI-oriented schema markup, build topic clusters, or any variation of "how to appear in AI answers". Also activate when the user mentions Share of Model, Golden Prompts, dark queries, semantic chunking, citation rate, AI referral traffic, or brand mention monitoring across LLMs, even without explicitly saying "GEO".
 ---
 
-# GEO / AEO: Otimização para LLMs
+# GEO / AEO: LLM Optimization
 
-Posicionar um site ou marca para ser **recuperado, citado e recomendado** por motores generativos (ChatGPT, Perplexity, Google AI Overviews, Gemini, Claude). Isso é diferente de SEO clássico: o objetivo não é ranquear uma URL azul, é virar parte da resposta sintetizada pela IA.
+Position a website or brand to be **retrieved, cited, and recommended** by generative engines (ChatGPT, Perplexity, Google AI Overviews, Gemini, Claude). This is different from classic SEO: the goal is not to rank a blue URL — it is to become part of the answer the AI synthesizes.
 
-## Modelo mental
+## Mental model
 
-Uma LLM responde em três etapas. Otimizar significa atacar cada uma:
+An LLM answers in three stages. Optimizing means attacking each one:
 
-1. **Recuperação (retrieval)** — o motor busca documentos relevantes em tempo real. Se o site é lento, bloqueia crawlers, não tem HTTPS ou depende de JS pesado, ele nunca entra no conjunto de recuperação. Coberto pela **Camada 1**.
-2. **Extração e síntese** — o modelo lê o que recuperou, interpreta os dados estruturados e extrai trechos para montar a resposta. Conteúdo mal estruturado é descartado. Coberto pelas **Camadas 2, 3 e 4**.
-3. **Citação e recomendação** — o modelo decide quais fontes citar e com que sentimento posicionar a marca. Coberto pelas **Camadas 5 e 6**.
+1. **Retrieval** — the engine fetches relevant documents in real time. If the site is slow, blocks crawlers, lacks HTTPS, or relies on heavy JS, it never enters the retrieval set. Covered by **Layer 1**.
+2. **Extraction and synthesis** — the model reads what it retrieved, interprets structured data, and extracts snippets to compose the answer. Poorly structured content is discarded. Covered by **Layers 2, 3, and 4**.
+3. **Citation and recommendation** — the model decides which sources to cite and with what sentiment to position the brand. Covered by **Layers 5 and 6**.
 
-Não pule etapas: um conteúdo perfeito (Camada 3) num site que a IA não consegue recuperar (Camada 1) tem visibilidade zero.
+Do not skip stages: perfect content (Layer 3) on a site the AI cannot retrieve (Layer 1) has zero visibility.
 
-## Como usar esta skill
+## How to use this skill
 
-Identifique o que o usuário precisa e leia o arquivo de referência correspondente. **Não tente fazer tudo de memória** — cada referência tem checklists, exemplos de código e templates prontos.
+Identify what the user needs and read the matching reference file. **Do not try to do everything from memory** — each reference has checklists, code examples, and ready-to-use templates.
 
-| Pedido do usuário | Leia |
+| User request | Read |
 |---|---|
-| llms.txt, SSR, latência, robots.txt, WAF, Bing, HTTPS, URLs, canonical, sitemap, Core Web Vitals | `references/01-infraestrutura.md` |
+| llms.txt, SSR, latency, robots.txt, WAF, Bing, HTTPS, URLs, canonical, sitemap, Core Web Vitals | `references/01-infrastructure.md` |
 | Schema FAQPage, Person, Organization, Product, HowTo, Article, LocalBusiness, Review, Breadcrumb, @graph, sameAs, Wikidata | `references/02-schema-markup.md` |
-| Answer-first, títulos como pergunta, TL;DR, chunking, citações, estatísticas, especialistas, tabelas, voz ativa, anti-fluff | `references/03-conteudo-geo.md` |
-| Topic clusters, search intent, Golden Prompts, dark queries, experiência de primeira mão, author bylines | `references/04-semantica-intencao.md` |
-| YouTube, Reddit/Quora, PR digital, consistência de entidade, diretórios, Knowledge Graph | `references/05-ecossistema-autoridade.md` |
-| Share of Model, sentimento, GA4, citation rate, ROI de referência, freshness, integridade factual, multimodal, comércio agêntico | `references/06-monitoramento.md` |
-| Auditoria automática de um site | `scripts/audit_geo.py` |
+| Answer-first, headings as questions, TL;DR, chunking, citations, statistics, experts, tables, active voice, anti-fluff | `references/03-geo-content.md` |
+| Topic clusters, search intent, Golden Prompts, dark queries, first-hand experience, author bylines | `references/04-semantics-intent.md` |
+| YouTube, Reddit/Quora, digital PR, entity consistency, directories, Knowledge Graph | `references/05-authority-ecosystem.md` |
+| Share of Model, sentiment, GA4, citation rate, referral ROI, freshness, factual integrity, multimodal, agentic commerce | `references/06-monitoring.md` |
+| Automated site audit | `scripts/audit_geo.py` |
 
-Se o pedido for amplo ("otimize meu site para IA"), faça uma **auditoria completa**: rode o script de auditoria, depois percorra as 6 referências na ordem 1 → 6 — cada uma abre com o checklist da sua camada — e trabalhe item por item.
+If the request is broad ("optimize my site for AI"), run a **full audit**: execute the audit script, then walk through the 6 references in order 1 → 6 — each one opens with its layer's checklist — and work item by item.
 
-## Fluxo de trabalho recomendado
+## Recommended workflow
 
-1. **Diagnóstico.** Se há um site, rode `python scripts/audit_geo.py <url>` para um relatório automático (latência, SSR, HTTPS, robots.txt, llms.txt, sitemap, canonical, schema, tabelas, alt-text). Use o resultado para priorizar.
-2. **Camada 1 primeiro.** Sem infraestrutura recuperável, nada mais importa.
-3. **Camadas 2, 3 e 4 juntas.** Schema, conteúdo answer-first e arquitetura semântica se reforçam — trabalhe-os na mesma passada.
-4. **Camadas 5 e 6 são contínuas.** Ecossistema e monitoramento não são tarefas únicas; entregue ao usuário um plano recorrente.
-5. **Entregue um checklist priorizado.** Sempre feche com um plano de ação ordenado por impacto/esforço, não só uma lista de tudo que existe.
+1. **Diagnosis.** If there is a site, run `python scripts/audit_geo.py <url>` for an automated report (latency, SSR, HTTPS, robots.txt, llms.txt, sitemap, canonical, schema, tables, alt-text). Use the result to prioritize.
+2. **Layer 1 first.** Without retrievable infrastructure, nothing else matters.
+3. **Layers 2, 3, and 4 together.** Schema, answer-first content, and semantic architecture reinforce each other — work on them in the same pass.
+4. **Layers 5 and 6 are continuous.** Ecosystem and monitoring are not one-off tasks; hand the user a recurring plan.
+5. **Deliver a prioritized checklist.** Always close with an action plan ordered by impact/effort, not just a list of everything that exists.
 
-## Princípios que valem para qualquer entrega
+## Principles that apply to every deliverable
 
-- **Texto puro vence.** Dados, estatísticas, tabelas e respostas precisam estar em texto extraível, nunca presos em imagens, PDFs não-OCR ou componentes que só renderizam via JS no cliente.
-- **Toda afirmação factual precisa de fonte.** Modelos confiam mais em conteúdo verificável. Vincule dados a fontes primárias e autoritárias (domínios .gov, .edu, papers, órgãos oficiais). Nunca invente números.
-- **Blocos auto-contidos.** A IA extrai pedaços, não o artigo inteiro. Cada bloco de 100-300 tokens deve fazer sentido lido isoladamente.
-- **Frescor importa.** Modelos generativos têm forte viés de recência. Conteúdo com data visível e atualizado a cada ~90 dias é favorecido.
-- **A pergunta é o título.** H2/H3 escritos como perguntas naturais batem com o jeito que as pessoas perguntam para a IA.
-- **Consistência de entidade.** Nome, descrição, dados e perfis da marca devem ser idênticos em todos os canais para a IA reconciliar a entidade.
+- **Plain text wins.** Data, statistics, tables, and answers must be in extractable text, never trapped in images, non-OCR PDFs, or components that only render via client-side JS.
+- **Every factual claim needs a source.** Models trust verifiable content more. Link data to primary and authoritative sources (.gov, .edu domains, papers, official bodies). Never make up numbers.
+- **Self-contained blocks.** The AI extracts chunks, not the whole article. Each 100-300 token block must make sense read in isolation.
+- **Freshness matters.** Generative models have a strong recency bias. Content with a visible date, updated roughly every 90 days, is favored.
+- **The question is the heading.** H2/H3 written as natural questions match how people ask AI.
+- **Entity consistency.** The brand's name, description, data, and profiles must be identical across all channels for the AI to reconcile the entity.
 
-## Formato de entrega esperado
+## Expected delivery format
 
-Quando o usuário pedir uma auditoria ou plano, entregue:
+When the user asks for an audit or a plan, deliver:
 
-1. **Resumo executivo** — 3-5 linhas sobre o estado atual e a maior alavanca.
-2. **Achados por camada** — o que está OK, o que falta, organizado nas 6 camadas.
-3. **Plano de ação priorizado** — tabela com tarefa, camada, impacto estimado (alto/médio/baixo) e esforço.
-4. **Artefatos prontos** — quando aplicável, gere os arquivos reais (llms.txt, blocos de JSON-LD, conteúdo reescrito) em vez de só descrever.
+1. **Executive summary** — 3-5 lines on the current state and the biggest lever.
+2. **Findings by layer** — what is OK, what is missing, organized across the 6 layers.
+3. **Prioritized action plan** — table with task, layer, estimated impact (high/medium/low), and effort.
+4. **Ready artifacts** — when applicable, generate the actual files (llms.txt, JSON-LD blocks, rewritten content) instead of just describing them.
 
-Para arquivos como `llms.txt` e blocos de schema, use os templates em `assets/`.
+For files like `llms.txt` and schema blocks, use the templates in `assets/`.
 
-## Erros comuns a evitar
+## Common mistakes to avoid
 
-- Tratar GEO como SEO clássico. Densidade de palavra-chave e link building tradicional não são o foco; estrutura extraível e autoridade de entidade são.
-- Otimizar conteúdo num site que a IA não consegue renderizar, recuperar ou que não tem HTTPS válido.
-- Esconder dados em imagens "para ficar bonito" — a IA não lê. Tabelas comparativas precisam ser HTML real.
-- Citar estatísticas sem fonte. Isso reduz a confiança do modelo no documento inteiro.
-- Bloquear `OAI-SearchBot`, `PerplexityBot` ou `ClaudeBot` no robots.txt — ou no WAF/Cloudflare Bot Fight Mode — por engano.
-- Ignorar o Bing: o ChatGPT usa o índice do Bing para busca em tempo real.
-- Deixar informações contraditórias sobre preço, serviço ou liderança no site — isso gera alucinações da IA sobre a marca.
-- Entregar uma lista genérica de boas práticas sem priorizar pelo contexto real do site.
+- Treating GEO as classic SEO. Keyword density and traditional link building are not the focus; extractable structure and entity authority are.
+- Optimizing content on a site the AI cannot render, retrieve, or that lacks valid HTTPS.
+- Hiding data in images "to look pretty" — the AI does not read them. Comparison tables must be real HTML.
+- Citing statistics without a source. This lowers the model's trust in the entire document.
+- Blocking `OAI-SearchBot`, `PerplexityBot`, or `ClaudeBot` in robots.txt — or in the WAF/Cloudflare Bot Fight Mode — by mistake.
+- Ignoring Bing: ChatGPT uses the Bing index for real-time search.
+- Leaving contradictory information about pricing, services, or leadership on the site — this triggers AI hallucinations about the brand.
+- Delivering a generic best-practice list without prioritizing for the site's real context.

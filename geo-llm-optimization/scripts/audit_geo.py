@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 """
-audit_geo.py - Auditoria automatica de infraestrutura GEO/AEO de um site.
+audit_geo.py - Automated GEO/AEO infrastructure audit for a website.
 
-Cobre a Camada 1 (infraestrutura) e sinais basicos das Camadas 2, 3 e 6:
-  - Latencia / TTFB
-  - SSR (conteudo no HTML inicial sem JS)
-  - HTTPS valido e redirect de http
-  - llms.txt e llms-full.txt
-  - robots.txt: bots de IA bloqueados ou liberados, referencia a sitemap
-  - sitemap.xml acessivel
+Focuses on Layer 1 (infrastructure) and basic signals from Layers 2, 3, and 6:
+  - Latency / TTFB
+  - SSR (content present in initial HTML without JS)
+  - Valid HTTPS and http->https redirect
+  - llms.txt and llms-full.txt
+  - robots.txt: AI bots allowed/blocked, sitemap reference
+  - sitemap.xml accessible
   - canonical tag
-  - JSON-LD / Schema markup e tipos presentes
-  - Sinais answer-first (H1, primeiro paragrafo)
-  - Tabelas HTML reais vs imagens
-  - alt-text em imagens
+  - JSON-LD / Schema markup and detected types
+  - Answer-first signals (H1, first paragraph)
+  - Real HTML tables vs images
+  - Image alt-text
 
-Uso:
+Usage:
     python audit_geo.py https://site.com
 
-Dependencias: apenas a biblioteca padrao do Python 3.
+Dependencies: Python 3 standard library only.
 """
 
 import sys
@@ -39,7 +39,7 @@ VALUABLE_SCHEMA = {"FAQPage", "QAPage", "Person", "Organization", "Article",
 
 
 def fetch(url, method="GET"):
-    """Busca uma URL e retorna (status, headers, body, elapsed_seconds)."""
+    """Fetches a URL and returns (status, headers, body, elapsed_seconds)."""
     req = urllib.request.Request(url, method=method, headers={"User-Agent": USER_AGENT})
     start = time.time()
     try:
@@ -55,30 +55,30 @@ def fetch(url, method="GET"):
 def check_https(url):
     parsed = urlparse(url)
     if parsed.scheme != "https":
-        return {"check": "HTTPS", "valor": parsed.scheme, "ok": False,
-                "nota": "Site nao usa HTTPS. IAs despriorizam sites sem TLS valido."}
+        return {"check": "HTTPS", "value": parsed.scheme, "ok": False,
+                "note": "Site is not using HTTPS. Generative engines deprioritize sites without valid TLS."}
     status, _, _, _ = fetch(url)
     ok = status is not None and status < 400
     http_url = "http://" + parsed.netloc
     h_status, h_headers, _, _ = fetch(http_url)
     redirects = h_status in (301, 302, 308) and "https" in h_headers.get("Location", "")
     if not ok:
-        nota = "HTTPS retornou erro - verificar certificado e disponibilidade."
+        note = "HTTPS returned an error — check certificate and availability."
     elif redirects:
-        nota = "HTTPS OK. Redirect http->https OK."
+        note = "HTTPS OK. http->https redirect OK."
     else:
-        nota = "HTTPS OK. Confirme manualmente o redirect 301 de http para https."
-    return {"check": "HTTPS", "valor": "https", "ok": ok, "nota": nota}
+        note = "HTTPS OK. Manually confirm a 301 redirect from http to https."
+    return {"check": "HTTPS", "value": "https", "ok": ok, "note": note}
 
 
 def check_latency(url):
     status, _, _, elapsed = fetch(url)
     ms = round(elapsed * 1000)
     ok = ms < 200
-    note = "OK" if ok else "ACIMA DE 200ms - reduzir TTFB (CDN, cache, edge)"
+    note = "OK" if ok else "ABOVE 200ms — reduce TTFB (CDN, cache, edge)"
     if status is None:
-        note = "FALHA ao acessar o site"
-    return {"check": "Latencia / TTFB", "valor": f"{ms}ms", "ok": ok, "nota": note}
+        note = "FAILED to access the site"
+    return {"check": "Latency / TTFB", "value": f"{ms}ms", "ok": ok, "note": note}
 
 
 def check_ssr(body):
@@ -87,27 +87,27 @@ def check_ssr(body):
     text = re.sub(r"<[^>]+>", " ", text)
     words = len(text.split())
     ok = words > 250
-    nota = ("OK - conteudo presente no HTML inicial" if ok
-            else "POUCO TEXTO no HTML inicial - possivel SPA sem SSR. "
-                 "Crawlers de IA podem ver pagina vazia.")
-    return {"check": "SSR / conteudo no HTML inicial",
-            "valor": f"~{words} palavras", "ok": ok, "nota": nota}
+    note = ("OK — content present in initial HTML" if ok
+            else "LOW TEXT in initial HTML — possible SPA without SSR. "
+                 "AI crawlers may see an empty page.")
+    return {"check": "SSR / content in initial HTML",
+            "value": f"~{words} words", "ok": ok, "note": note}
 
 
 def check_file(base, path):
     url = urljoin(base, path)
     status, _, body, _ = fetch(url)
     ok = status == 200 and len(body.strip()) > 0
-    nota = "Encontrado" if ok else f"Ausente (status {status})"
-    return {"check": path, "valor": url, "ok": ok, "nota": nota}
+    note = "Found" if ok else f"Missing (status {status})"
+    return {"check": path, "value": url, "ok": ok, "note": note}
 
 
 def check_robots(base):
     url = urljoin(base, "/robots.txt")
     status, _, body, _ = fetch(url)
     if status != 200:
-        return [{"check": "robots.txt", "valor": url, "ok": False,
-                 "nota": f"Nao encontrado (status {status})"}]
+        return [{"check": "robots.txt", "value": url, "ok": False,
+                 "note": f"Not found (status {status})"}]
     results = []
     current_agents = []
     blocked = {}
@@ -129,25 +129,25 @@ def check_robots(base):
     for bot in AI_SEARCH_BOTS:
         is_blocked = blocked.get(bot, False) or blocked.get("*", False)
         results.append({
-            "check": f"robots.txt - bot de busca '{bot}'",
-            "valor": "BLOQUEADO" if is_blocked else "liberado",
+            "check": f"robots.txt - search bot '{bot}'",
+            "value": "BLOCKED" if is_blocked else "allowed",
             "ok": not is_blocked,
-            "nota": ("CRITICO: bot de busca de IA bloqueado = some das respostas"
-                     if is_blocked else "OK - liberado para recuperacao")
+            "note": ("CRITICAL: blocking AI search bots can remove you from answers"
+                     if is_blocked else "OK — allowed for retrieval")
         })
     for bot in AI_TRAINING_BOTS:
         is_blocked = blocked.get(bot, False)
         results.append({
-            "check": f"robots.txt - bot de treinamento '{bot}'",
-            "valor": "bloqueado" if is_blocked else "liberado",
+            "check": f"robots.txt - training bot '{bot}'",
+            "value": "blocked" if is_blocked else "allowed",
             "ok": True,
-            "nota": "Decisao do negocio - nao afeta visibilidade nas respostas"
+            "note": "Business decision — does not affect answer visibility (retrieval)"
         })
     results.append({
-        "check": "robots.txt - referencia a Sitemap",
-        "valor": "presente" if has_sitemap else "ausente",
+        "check": "robots.txt - Sitemap reference",
+        "value": "present" if has_sitemap else "missing",
         "ok": has_sitemap,
-        "nota": "OK" if has_sitemap else "Adicionar linha 'Sitemap:' no robots.txt"
+        "note": "OK" if has_sitemap else "Add a 'Sitemap:' line to robots.txt"
     })
     return results
 
@@ -171,26 +171,26 @@ def check_schema(body):
                 if t:
                     types.append(t if isinstance(t, str) else ",".join(t))
         except Exception:
-            types.append("(JSON-LD invalido)")
+            types.append("(invalid JSON-LD)")
     ok = len(blocks) > 0
     has_valuable = any(t in VALUABLE_SCHEMA for t in types)
-    found = ", ".join(types) if types else "nenhum"
-    nota = f"Tipos: {found}. " + ("Inclui schema relevante para GEO." if has_valuable
-                                   else "Considere FAQPage, Person, Organization.")
+    found = ", ".join(types) if types else "none"
+    note = f"Types: {found}. " + ("Includes GEO-relevant schema." if has_valuable
+                                   else "Consider FAQPage, Person, Organization.")
     if has_graph:
-        nota += " Usa @graph (bom)."
+        note += " Uses @graph (good)."
     if not ok:
-        nota = "Nenhum JSON-LD encontrado. Adicionar schema markup (Camada 2)."
+        note = "No JSON-LD found. Add schema markup (Layer 2)."
     return {"check": "Schema markup (JSON-LD)",
-            "valor": f"{len(blocks)} bloco(s)", "ok": ok, "nota": nota}
+            "value": f"{len(blocks)} block(s)", "ok": ok, "note": note}
 
 
 def check_canonical(body):
     m = re.search(r'<link[^>]*rel=["\']canonical["\'][^>]*>', body, flags=re.I)
     ok = m is not None
-    return {"check": "Canonical tag", "valor": "presente" if ok else "ausente",
-            "ok": ok, "nota": "OK" if ok
-            else "Sem <link rel=canonical>. Adicionar para consolidar autoridade."}
+    return {"check": "Canonical tag", "value": "present" if ok else "missing",
+            "ok": ok, "note": "OK" if ok
+            else "Missing <link rel=canonical>. Add it to consolidate authority."}
 
 
 def check_answer_first(body):
@@ -200,57 +200,55 @@ def check_answer_first(body):
     p_text = re.sub(r"<[^>]+>", "", p.group(1)).strip() if p else ""
     p_words = len(p_text.split())
     ok = h1_text is not None and 15 <= p_words <= 120
-    nota = []
+    note = []
     if not h1_text:
-        nota.append("Sem H1.")
+        note.append("No H1.")
     if p_words == 0:
-        nota.append("Sem primeiro paragrafo de texto.")
+        note.append("No first text paragraph.")
     elif p_words < 15:
-        nota.append("Primeiro paragrafo curto demais para conter a resposta.")
-    nota.append("Verifique manualmente se a resposta direta esta nas "
-                "primeiras 40-60 palavras (answer-first).")
-    return {"check": "Sinais answer-first",
-            "valor": f"H1: {'sim' if h1_text else 'nao'} | 1o paragrafo: ~{p_words} palavras",
-            "ok": ok, "nota": " ".join(nota)}
+        note.append("First paragraph too short to contain the answer.")
+    note.append("Manually verify the direct answer is in the first ~40–60 words (answer-first).")
+    return {"check": "Answer-first signals",
+            "value": f"H1: {'yes' if h1_text else 'no'} | 1st paragraph: ~{p_words} words",
+            "ok": ok, "note": " ".join(note)}
 
 
 def check_tables(body):
     tables = len(re.findall(r"<table", body, flags=re.I))
-    return {"check": "Tabelas HTML",
-            "valor": f"{tables} tabela(s)", "ok": True,
-            "nota": ("Tabelas HTML reais detectadas (extraiveis pela IA)." if tables
-                     else "Nenhuma <table>. Se ha dados comparativos, use tabela HTML, "
-                          "nao imagem.")}
+    return {"check": "HTML tables",
+            "value": f"{tables} table(s)", "ok": True,
+            "note": ("Real HTML tables detected (extractable by AI)." if tables
+                     else "No <table> found. If you have comparison data, use an HTML table, not an image.")}
 
 
 def check_alt_text(body):
     imgs = re.findall(r"<img[^>]*>", body, flags=re.I)
     if not imgs:
-        return {"check": "Alt-text em imagens", "valor": "0 imagens",
-                "ok": True, "nota": "Nenhuma imagem na pagina."}
+        return {"check": "Image alt-text", "value": "0 images",
+                "ok": True, "note": "No images on the page."}
     with_alt = sum(1 for i in imgs
                    if re.search(r'alt=["\'][^"\']+["\']', i, flags=re.I))
     pct = round(100 * with_alt / len(imgs))
     ok = pct >= 90
-    return {"check": "Alt-text em imagens",
-            "valor": f"{with_alt}/{len(imgs)} ({pct}%)", "ok": ok,
-            "nota": "OK" if ok else "Adicionar alt-text descritivo as imagens sem alt."}
+    return {"check": "Image alt-text",
+            "value": f"{with_alt}/{len(imgs)} ({pct}%)", "ok": ok,
+            "note": "OK" if ok else "Add descriptive alt-text to images without alt."}
 
 
 def main():
     if len(sys.argv) < 2:
-        print("Uso: python audit_geo.py https://site.com")
+        print("Usage: python audit_geo.py https://site.com")
         sys.exit(1)
     url = sys.argv[1]
     if not urlparse(url).scheme:
         url = "https://" + url
     base = f"{urlparse(url).scheme}://{urlparse(url).netloc}"
 
-    print(f"\n=== Auditoria GEO/AEO: {url} ===\n")
+    print(f"\n=== GEO/AEO Audit: {url} ===\n")
 
     status, _, body, _ = fetch(url)
     if status is None:
-        print(f"ERRO: nao foi possivel acessar {url}\nDetalhe: {body}")
+        print(f"ERROR: could not access {url}\nDetails: {body}")
         sys.exit(1)
 
     results = []
@@ -268,22 +266,22 @@ def main():
     results.append(check_alt_text(body))
 
     for r in results:
-        mark = "[ OK ]" if r["ok"] else "[FALHA]"
+        mark = "[ OK ]" if r["ok"] else "[FAIL]"
         print(f"{mark} {r['check']}")
-        print(f"        valor: {r['valor']}")
-        print(f"        nota:  {r['nota']}\n")
+        print(f"        value: {r['value']}")
+        print(f"        note:  {r['note']}\n")
 
     falhas = [r for r in results if not r["ok"]]
     print("=" * 55)
-    print(f"Resumo: {len(results) - len(falhas)}/{len(results)} checagens OK.")
+    print(f"Summary: {len(results) - len(falhas)}/{len(results)} checks OK.")
     if falhas:
-        print("\nPrioridades (resolver primeiro):")
+        print("\nPriorities (fix first):")
         for r in falhas:
-            print(f"  - {r['check']}: {r['nota']}")
-    print("\nNota: este script cobre a Camada 1 e sinais basicos das Camadas")
-    print("2, 3 e 6. As Camadas 4 e 5 (estrategia de conteudo, autoridade")
-    print("externa) e o monitoramento continuo exigem analise manual seguindo")
-    print("as referencias tematicas da skill (uma por camada).\n")
+            print(f"  - {r['check']}: {r['note']}")
+    print("\nNote: this script covers Layer 1 and basic signals from Layers")
+    print("2, 3, and 6. Layers 4 and 5 (content strategy, external authority)")
+    print("and continuous monitoring require manual analysis using the skill")
+    print("reference docs (one per layer).\n")
 
 
 if __name__ == "__main__":

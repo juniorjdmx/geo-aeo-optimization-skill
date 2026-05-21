@@ -1,71 +1,71 @@
-# Camada 2 — Dados Estruturados (Schema Markup Avançado)
+# Layer 2 — Structured Data (Advanced Schema Markup)
 
-Schema markup é o que o modelo lê como **fato declarado** sobre a página. Bem feito, ajuda a IA a identificar pares pergunta/resposta como "ground truth", alimentar agentes de compra, entender processos e consolidar a marca como entidade no grafo de conhecimento.
+Schema markup is what the model reads as **declared fact** about the page. Done well, it helps the AI identify question/answer pairs as "ground truth", feed shopping agents, understand processes, and consolidate the brand as an entity in the knowledge graph.
 
-Use sempre **JSON-LD**. Templates prontos em `assets/schema-templates.json`. Idealmente una todas as entidades da página num único grafo via `@graph` (ver 2.11).
+Always use **JSON-LD**. Ready templates live in `assets/schema-templates.json`. Ideally, join all entities on the page into a single graph via `@graph` (see 2.11).
 
 ## Checklist
 
-- [ ] `Organization` com `sameAs`
-- [ ] `Person` (autor) com credenciais e expertise
+- [ ] `Organization` with `sameAs`
+- [ ] `Person` (author) with credentials and expertise
 - [ ] `FAQPage`
-- [ ] `Product` (preço, SKU, disponibilidade, avaliações)
-- [ ] `HowTo` para processos passo a passo
-- [ ] `Article` com `datePublished` e `dateModified`
-- [ ] `LocalBusiness` com NAP consistente
-- [ ] `Review` para depoimentos
+- [ ] `Product` (price, SKU, availability, ratings)
+- [ ] `HowTo` for step-by-step processes
+- [ ] `Article` with `datePublished` and `dateModified`
+- [ ] `LocalBusiness` with consistent NAP
+- [ ] `Review` for testimonials
 - [ ] `BreadcrumbList`
-- [ ] Conexão de tudo via `@graph`
+- [ ] Everything connected via `@graph`
 
 ---
 
 ## 2.1 Organization
 
-Define a marca como **entidade**. A propriedade `sameAs` liga a entidade a perfis oficiais e a verbetes em bases estruturadas como Wikidata, ajudando a IA a solidificar a marca no grafo de conhecimento.
+Defines the brand as an **entity**. The `sameAs` property links the entity to official profiles and entries in structured bases like Wikidata, helping the AI solidify the brand in the knowledge graph.
 
 ```json
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Nome da Empresa",
+  "name": "Company Name",
   "url": "https://site.com",
   "logo": "https://site.com/logo.png",
-  "description": "O que a empresa faz, em uma frase factual.",
+  "description": "What the company does, in one factual sentence.",
   "sameAs": [
     "https://www.wikidata.org/wiki/Q00000000",
-    "https://pt.wikipedia.org/wiki/Nome_da_Empresa",
-    "https://www.linkedin.com/company/empresa",
-    "https://www.crunchbase.com/organization/empresa"
+    "https://en.wikipedia.org/wiki/Company_Name",
+    "https://www.linkedin.com/company/company",
+    "https://www.crunchbase.com/organization/company"
   ]
 }
 ```
 
-O elo mais valioso de `sameAs` é o **Wikidata**. Inclua todos os perfis oficiais verificáveis. Mantenha `name`, `description` e `logo` idênticos em todos os canais (ver Camada 5.4 — consistência de entidade).
+The most valuable `sameAs` link is **Wikidata**. Include every verifiable official profile. Keep `name`, `description`, and `logo` identical across every channel (see Layer 5.4 — entity consistency).
 
 ---
 
-## 2.2 Person (autor)
+## 2.2 Person (author)
 
-Detalhar quem escreveu reforça o sinal de **E-E-A-T** (Experiência, Expertise, Autoridade, Confiabilidade).
+Detailing who wrote the content reinforces the **E-E-A-T** signal (Experience, Expertise, Authoritativeness, Trustworthiness).
 
 ```json
 {
   "@type": "Person",
-  "name": "Nome Completo do Autor",
-  "jobTitle": "Cargo ou especialidade",
-  "description": "Resumo da expertise e experiência relevante.",
-  "knowsAbout": ["Tópico 1", "Tópico 2"],
-  "sameAs": ["https://www.linkedin.com/in/perfil"]
+  "name": "Author Full Name",
+  "jobTitle": "Role or specialty",
+  "description": "Summary of relevant expertise and experience.",
+  "knowsAbout": ["Topic 1", "Topic 2"],
+  "sameAs": ["https://www.linkedin.com/in/profile"]
 }
 ```
 
-`knowsAbout` reflete as áreas reais de expertise. Conecte o `Person` ao `Article` via a propriedade `author`. Credenciais devem ser verdadeiras e verificáveis.
+`knowsAbout` reflects real areas of expertise. Connect `Person` to the `Article` via the `author` property. Credentials must be true and verifiable.
 
 ---
 
 ## 2.3 FAQPage
 
-Marcar pares pergunta/resposta faz a IA tratá-los como **verdade fundamental** — conteúdo confiável e diretamente citável. É um dos formatos de maior ROI para AEO.
+Marking up question/answer pairs makes the AI treat them as **ground truth** — trusted, directly citable content. It is one of the highest-ROI formats for AEO.
 
 ```json
 {
@@ -73,34 +73,34 @@ Marcar pares pergunta/resposta faz a IA tratá-los como **verdade fundamental** 
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Pergunta frequente em linguagem natural?",
+      "name": "Common question in natural language?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Resposta direta em texto puro, idêntica ao conteúdo visível."
+        "text": "Direct answer in plain text, identical to the visible content."
       }
     }
   ]
 }
 ```
 
-A resposta no schema deve **corresponder ao conteúdo visível** da página. Reaproveite as perguntas usadas como H2/H3 (Camada 3).
+The answer in the schema must **match the visible content** on the page. Reuse the questions you used as H2/H3 (Layer 3).
 
 ---
 
 ## 2.4 Product
 
-Alimenta agentes de compra e respostas transacionais. Inclua dados comerciais completos.
+Feeds shopping agents and transactional answers. Include complete commercial data.
 
 ```json
 {
   "@type": "Product",
-  "name": "Nome do Produto",
+  "name": "Product Name",
   "sku": "SKU-123",
-  "description": "Descrição do produto.",
+  "description": "Product description.",
   "offers": {
     "@type": "Offer",
     "price": "189.00",
-    "priceCurrency": "BRL",
+    "priceCurrency": "USD",
     "availability": "https://schema.org/InStock"
   },
   "aggregateRating": {
@@ -111,144 +111,144 @@ Alimenta agentes de compra e respostas transacionais. Inclua dados comerciais co
 }
 ```
 
-Preço, SKU, disponibilidade e avaliações devem refletir o que está na página e na realidade do estoque.
+Price, SKU, availability, and ratings must reflect what is on the page and the real inventory.
 
 ---
 
 ## 2.5 HowTo
 
-Marca processos passo a passo explicitamente, ideal para consultas procedimentais ("como fazer...").
+Marks up step-by-step processes explicitly, ideal for procedural queries ("how to...").
 
 ```json
 {
   "@type": "HowTo",
-  "name": "Como configurar X",
+  "name": "How to set up X",
   "step": [
-    { "@type": "HowToStep", "name": "Passo 1", "text": "Instrução do passo 1." },
-    { "@type": "HowToStep", "name": "Passo 2", "text": "Instrução do passo 2." }
+    { "@type": "HowToStep", "name": "Step 1", "text": "Instruction for step 1." },
+    { "@type": "HowToStep", "name": "Step 2", "text": "Instruction for step 2." }
   ]
 }
 ```
 
-Cada passo com texto claro e auto-contido. Combina com conteúdo answer-first e chunking (Camada 3).
+Each step with clear, self-contained text. Pairs with answer-first content and chunking (Layer 3).
 
 ---
 
 ## 2.6 Article
 
-Use em todos os posts e páginas editoriais. `datePublished` e `dateModified` são essenciais — alimentam o sinal de freshness (Camada 6).
+Use on every editorial post and page. `datePublished` and `dateModified` are essential — they feed the freshness signal (Layer 6).
 
 ```json
 {
   "@type": "Article",
-  "headline": "Título do artigo, idealmente como pergunta",
+  "headline": "Article title, ideally phrased as a question",
   "datePublished": "2026-01-01",
   "dateModified": "2026-05-20",
-  "author": { "@type": "Person", "name": "Nome do Autor" },
+  "author": { "@type": "Person", "name": "Author Name" },
   "publisher": {
     "@type": "Organization",
-    "name": "Nome da Empresa",
+    "name": "Company Name",
     "logo": { "@type": "ImageObject", "url": "https://site.com/logo.png" }
   }
 }
 ```
 
-Atualize o `dateModified` de verdade quando revisar o conteúdo.
+Update `dateModified` for real when you revise the content.
 
 ---
 
 ## 2.7 LocalBusiness
 
-Para negócios com presença física. A regra de ouro é a consistência absoluta de **NAP** (Nome, Endereço, Telefone) em todos os lugares.
+For businesses with a physical presence. The golden rule is absolute **NAP** (Name, Address, Phone) consistency everywhere.
 
 ```json
 {
   "@type": "LocalBusiness",
-  "name": "Nome do Negócio",
+  "name": "Business Name",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Rua Exemplo, 100",
-    "addressLocality": "Cidade",
-    "addressRegion": "UF",
-    "postalCode": "00000-000"
+    "streetAddress": "123 Example St",
+    "addressLocality": "City",
+    "addressRegion": "ST",
+    "postalCode": "00000"
   },
-  "telephone": "+55-00-0000-0000"
+  "telephone": "+1-000-000-0000"
 }
 ```
 
-O NAP do schema deve ser idêntico ao do Google Business Profile, diretórios e do conteúdo visível. Divergência confunde a IA.
+The schema's NAP must be identical to the Google Business Profile, directories, and the visible content. Divergence confuses the AI.
 
 ---
 
 ## 2.8 Review
 
-Marca depoimentos de clientes, aumentando o sinal de confiança.
+Marks up customer testimonials, increasing the trust signal.
 
 ```json
 {
   "@type": "Review",
-  "itemReviewed": { "@type": "Organization", "name": "Nome da Empresa" },
-  "author": { "@type": "Person", "name": "Nome do Cliente" },
+  "itemReviewed": { "@type": "Organization", "name": "Company Name" },
+  "author": { "@type": "Person", "name": "Customer Name" },
   "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-  "reviewBody": "Depoimento real do cliente."
+  "reviewBody": "Real customer testimonial."
 }
 ```
 
-Use só depoimentos reais. Reviews falsos detectados destroem a confiança.
+Use only real testimonials. Fake reviews, once detected, destroy trust.
 
 ---
 
 ## 2.9 BreadcrumbList
 
-Sinaliza a hierarquia e o contexto da página, facilitando a "navegação" da IA pela estrutura do site.
+Signals the page's hierarchy and context, making it easier for the AI to "navigate" the site's structure.
 
 ```json
 {
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://site.com" },
-    { "@type": "ListItem", "position": 2, "name": "Serviços", "item": "https://site.com/servicos" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://site.com" },
+    { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://site.com/services" }
   ]
 }
 ```
 
-Deve refletir o caminho real da URL e a estrutura de topic clusters (Camada 4).
+It must mirror the real URL path and the topic-cluster structure (Layer 4).
 
 ---
 
-## 2.10 Outros tipos úteis
+## 2.10 Other useful types
 
-Conforme o conteúdo: `QAPage` (página de uma pergunta com respostas da comunidade), `VideoObject` (vídeos, ver Camada 5.1), `Event`, `Recipe`, `JobPosting`. Use o tipo que descreve melhor o conteúdo real da página.
+Depending on the content: `QAPage` (a page with one question and community answers), `VideoObject` (videos, see Layer 5.1), `Event`, `Recipe`, `JobPosting`. Use the type that best describes the actual content of the page.
 
 ---
 
-## 2.11 Conexão via @graph
+## 2.11 Connecting via @graph
 
-Em vez de blocos JSON-LD soltos, una todas as entidades da página num **grafo único** com `@graph`. Isso dá ao modelo clareza máxima sobre como as entidades se relacionam (o artigo, seu autor, a organização publicadora, os breadcrumbs).
+Instead of scattered JSON-LD blocks, join all page entities into a **single graph** with `@graph`. This gives the model maximum clarity about how entities relate (the article, its author, the publishing organization, the breadcrumbs).
 
 ```json
 {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "Organization", "@id": "https://site.com/#org", "name": "..." },
-    { "@type": "Person", "@id": "https://site.com/#autor", "name": "..." },
+    { "@type": "Person", "@id": "https://site.com/#author", "name": "..." },
     {
       "@type": "Article",
-      "author": { "@id": "https://site.com/#autor" },
+      "author": { "@id": "https://site.com/#author" },
       "publisher": { "@id": "https://site.com/#org" }
     }
   ]
 }
 ```
 
-Use `@id` para referenciar entidades entre si, evitando repetição e ambiguidade.
+Use `@id` to reference entities between blocks, avoiding repetition and ambiguity.
 
 ---
 
-## Validação
+## Validation
 
-Valide o JSON-LD em `validator.schema.org` e no Google Rich Results Test. Garanta que o markup está no HTML servido pelo servidor (ver Camada 1.2).
+Validate the JSON-LD at `validator.schema.org` and Google's Rich Results Test. Make sure the markup is in the server-rendered HTML (see Layer 1.2).
 
-## Saída esperada desta camada
+## Expected output from this layer
 
-Entregue os blocos JSON-LD prontos e preenchidos com dados reais, idealmente unidos via `@graph`, com instrução de onde inserir e o lembrete de validar antes de publicar. Recomende sobre Wikidata: existe item? Vale criar?
+Deliver ready-to-use JSON-LD blocks filled with real data, ideally joined via `@graph`, with instructions for where to insert them and the reminder to validate before publishing. Provide a Wikidata recommendation: is there an item? Is it worth creating one?

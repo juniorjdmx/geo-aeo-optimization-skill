@@ -1,39 +1,38 @@
-# [Nome do Site / Empresa]
+# [Site / Company Name]
 
-> [Descrição em uma frase: o que faz, para quem, qual o diferencial.]
+> [One-sentence description: what you do, for whom, what differentiates you.]
 
-[Parágrafo opcional de contexto. Mantenha factual e direto. Diga o que o
-leitor/modelo encontra neste site e como o conteúdo está organizado.]
+[Optional context paragraph. Keep it factual and direct. State what the
+reader/model will find on this site and how the content is organized.]
 
-## Páginas principais
+## Main pages
 
-- [Página inicial](https://site.com/): descrição de uma linha do conteúdo.
-- [Sobre](https://site.com/sobre): quem é a empresa, credenciais, autoridade.
-- [Produtos / Serviços](https://site.com/servicos): o que é oferecido.
-- [Página-chave de conteúdo](https://site.com/conteudo-chave): o tópico central e a resposta que o site oferece.
+- [Homepage](https://site.com/): one-line description of the page.
+- [About](https://site.com/about): who you are, credentials, authority.
+- [Products / Services](https://site.com/services): what you offer.
+- [Key content page](https://site.com/key-content): the core topic and the answer your site provides.
 
-## Documentação / Conteúdo de referência
+## Documentation / Reference content
 
-- [Guia ou artigo principal](https://site.com/guia): o que o leitor aprende aqui.
-- [FAQ](https://site.com/faq): perguntas frequentes respondidas com autoridade.
-- [Blog](https://site.com/blog): índice de artigos por tópico.
+- [Main guide or pillar article](https://site.com/guide): what the reader learns here.
+- [FAQ](https://site.com/faq): frequently asked questions answered authoritatively.
+- [Blog](https://site.com/blog): index of articles by topic.
 
-## Contato
+## Contact
 
-- [Página de contato](https://site.com/contato): como falar com a empresa.
+- [Contact page](https://site.com/contact): how to reach the company.
 
-## Opcional
+## Optional
 
-- [Páginas secundárias](https://site.com/secundaria): conteúdo de menor prioridade,
-  que pode ser pulado se o contexto do modelo for limitado.
-- [Políticas](https://site.com/politicas): termos, privacidade.
+- [Secondary pages](https://site.com/secondary): lower-priority content that can be skipped if model context is limited.
+- [Policies](https://site.com/policies): terms, privacy.
 
 <!--
-INSTRUÇÕES DE USO (remover antes de publicar):
-- Salve este arquivo como llms.txt na raiz do domínio: https://site.com/llms.txt
-- Cada link deve ter uma descrição curta e factual de uma linha.
-- A seção "Opcional" sinaliza conteúdo dispensável em contexto limitado.
-- Para llms-full.txt: mesma estrutura, mas inclua o conteúdo completo em Markdown
-  das páginas-chave, para o modelo consumir sem fazer fetch de cada URL.
-- Mantenha atualizado quando a estrutura do site mudar.
+USAGE INSTRUCTIONS (remove before publishing):
+- Save this file as llms.txt at the domain root: https://site.com/llms.txt
+- Each link should have a short, factual one-line description.
+- The "Optional" section signals skippable content for limited context.
+- For llms-full.txt: same structure, but include the full Markdown content of key pages,
+  so the model can consume it without fetching every URL.
+- Keep it updated when the site structure changes.
 -->
